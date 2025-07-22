@@ -10,6 +10,7 @@
 
 // Animation Process
 constexpr const bool animating = true;
+int frame = 0;
 
 // Window settings
 constexpr int WINDOW_WIDTH = 192 * 7;
@@ -293,10 +294,7 @@ void saveScreenshot(const sf::Texture& texture, const RenderState& state) {
 #endif
 
     std::stringstream filename;
-    filename << "fractal_" << (state.showJulia ? "julia_" : "mandelbrot_")
-        << std::fixed << std::setprecision(6) << state.viewportX << "_" << state.viewportY
-        << "_zoom_" << std::setprecision(2) << (3.0 / state.viewportX)
-        << now << ".png";
+    filename << frame << ".png";
 
     screenshot.saveToFile(filename.str());
     std::cout << "Screenshot saved: " << filename.str() << std::endl;
@@ -378,7 +376,8 @@ int main() {
 
             if (animating) {
 
-                break; }
+                break;
+            }
 
             if (event.type == sf::Event::MouseWheelScrolled) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -566,11 +565,12 @@ int main() {
         if (animating) {
             saveScreenshot(texture, state);
             viewChanged = true;
-            state.viewportX += (-1.61299 - state.viewportX) / 25;
-            state.viewportY += (-1.4822e-05 - state.viewportY) / 25;
-            state.viewportHeight += (3.41061e-13 - state.viewportHeight) / 25;
-            state.colorDensity += (0.0186928 - state.colorDensity) / 25;
+            state.viewportX += (-1.7110287606470104826428269 - state.viewportX) / 1;
+            state.viewportY += (0.0003109297379698081368812 - state.viewportY) / 1;
+            state.viewportHeight += (0.0000000000001705302565824 - state.viewportHeight) / 25;
+            state.colorDensity += (0.0186927672475576400756836 - state.colorDensity) / 25;
             state.maxIterations += (1941 - state.maxIterations) / 25;
+            frame++;
         }
     }
 
